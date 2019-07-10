@@ -2,7 +2,8 @@
   "name": "file-list",
   "main": "file-list.js",
   "scripts": {
-    "start": "./node_modules/.bin/polymer serve"
+    "start": "./node_modules/.bin/polymer serve",
+    "test": "./node_modules/.bin/polymer test"
   },
   "dependencies": {
     "@polymer/iron-icon": "^3.0.1",
