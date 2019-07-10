@@ -2,7 +2,8 @@
 
 ![screenshot](demo/screenshot.png)
 
-## Install the Polymer-CLI
+## Usage
+See `test/file-list_test.html` and `test/file-list-http_test.html` for usage.
 
 ## Demo 
 
