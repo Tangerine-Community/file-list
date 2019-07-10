@@ -40,9 +40,9 @@ class FileList extends LitElement {
 
   onClick(event) {
     // Traverse the DOM to find the parent node with attribute of data-path.
-    let nodeWithPath = event.path.find(node => node.dataset && node.dataset.hasOwnProperty('path'))
+    let nodeWithPath = event.path.find(node => node.hasAttribute('data-path'))
     if (nodeWithPath) {
-      this.files = [...this.files.map(file => file.path === nodeWithPath.dataset.path ? {...file, selected: file.selected ? false : true} : file)]
+      this.files = [...this.files.map(file => file.path === nodeWithPath.getAttribute('data-path') ? {...file, selected: file.selected ? false : true} : file)]
       this.dispatchEvent(new Event('change', {bubbles:true}))
     }
   }
@@ -53,11 +53,6 @@ class FileList extends LitElement {
         .file[selected] {
           background: var(--selected-background, #CCC) !important
         }
-        /*
-        .file[selected]:not([focus]) {
-          background: var(--selected-background, #CCC)
-        }
-        */
         .file[focused]:not([selected])::before {
           background: var(--focus-not-selected-background, transparent) !important
         }
