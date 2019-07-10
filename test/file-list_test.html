@@ -48,7 +48,7 @@
           await animate()
         })
 
-        test('setting a FileList.files works', async () => {
+        test('setting FileList.files works', async () => {
           const element = fixture('BasicTestFixture')
           await animate()
           element.files = [
@@ -64,7 +64,7 @@
             }
           ]
           await animate()
-          //assert.equal(elementHeader.innerHTML, 'Hello new-prop1!')
+          assert.equal(element.shadowRoot.querySelectorAll('.file').length, 2)
         })
 
         test('should select file', async () => {
@@ -102,7 +102,6 @@
           assert.equal(element.files[0].selected, false)
           assert.equal(hasTriggeredSecondChangeEvent, true)
         })
-
 
       })
     </script>

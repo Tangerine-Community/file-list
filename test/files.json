@@ -1,0 +1,12 @@
+[
+  {
+    "path": "file1.png",
+    "type": "image",
+    "size": "22KB"
+  },
+  {
+    "path": "file2.png",
+    "type": "audio",
+    "size": "3.1MB"
+  }
+]
