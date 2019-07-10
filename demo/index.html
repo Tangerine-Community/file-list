@@ -25,7 +25,21 @@
       <h3>Basic file-list demo</h3>
       <demo-snippet>
         <template>
-          <file-list></file-list>
+          <file-list id="list1"></file-list>
+          <script>
+            list1.files = [
+              {
+                path: 'file1.png',
+                type: 'image',
+                size: '22KB'
+              },
+              {
+                path: 'file2.png',
+                type: 'audio',
+                size: '3.1MB'
+              }
+            ]
+          </script>
         </template>
       </demo-snippet>
     </div>

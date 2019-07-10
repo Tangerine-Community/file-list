@@ -44,12 +44,40 @@
       suite('file-list', () => {
 
         test('instantiating the element works', async () => {
-          const element = fixture('BasicTestFixture');
+          const element = fixture('BasicTestFixture')
           await animate()
-        });
+        })
 
-        test('setting a FileList.fileList works', async () => {
-          const element = fixture('BasicTestFixture');
+        test('setting a FileList.files works', async () => {
+          const element = fixture('BasicTestFixture')
+          await animate()
+          element.files = [
+            {
+              path: 'file1.png',
+              type: 'image',
+              size: '22KB'
+            },
+            {
+              path: 'file2.png',
+              type: 'audio',
+              size: '3.1MB'
+            }
+          ]
+          await animate()
+          //assert.equal(elementHeader.innerHTML, 'Hello new-prop1!')
+        })
+
+        test('should select file', async () => {
+          const element = fixture('BasicTestFixture')
+          let hasTriggeredFirstChangeEvent = false
+          let hasTriggeredSecondChangeEvent = false
+          element.addEventListener('change', () => {
+            if (hasTriggeredFirstChangeEvent) {
+              hasTriggeredSecondChangeEvent = true
+            } else {
+              hasTriggeredFirstChangeEvent = true
+            }
+          })
           await animate()
           element.files = [
             {
@@ -62,11 +90,21 @@
             }
           ]
           await animate()
-          debugger
-          //assert.equal(elementHeader.innerHTML, 'Hello new-prop1!');
-        });
+          element.shadowRoot.querySelector('.file').click()
+          await animate()
+          assert.equal(element.shadowRoot.querySelector('.file').hasAttribute('selected'), true)
+          assert.equal(element.files[0].selected, true)
+          assert.equal(hasTriggeredFirstChangeEvent, true)
+          assert.equal(hasTriggeredSecondChangeEvent, false)
+          element.shadowRoot.querySelector('.file').click()
+          await animate()
+          assert.equal(element.shadowRoot.querySelector('.file').hasAttribute('selected'), false)
+          assert.equal(element.files[0].selected, false)
+          assert.equal(hasTriggeredSecondChangeEvent, true)
+        })
 
-      });
+
+      })
     </script>
 
   </body>

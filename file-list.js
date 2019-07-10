@@ -1,8 +1,8 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html } from 'lit-element'
 import '@polymer/paper-item/paper-icon-item.js'
 import '@polymer/iron-icon/iron-icon.js'
-import '@polymer/iron-icons/iron-icons.js';
-import '@polymer/iron-icons/image-icons.js';
+import '@polymer/iron-icons/iron-icons.js'
+import '@polymer/iron-icons/image-icons.js'
 
 /**
  * `file-list`
@@ -13,33 +13,71 @@ import '@polymer/iron-icons/image-icons.js';
  * @demo demo/index.html
  */
 class FileList extends LitElement {
+
+  static get properties() {
+    return {
+      // Should be an array of objects with path, type, size, and selected properties.
+      files: {
+        type: Array
+      }
+    }
+  }
+
+  constructor() {
+    super()
+    this.files = []
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.addEventListener('click', this.onClick) 
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    this.removeEventListener('click', this.onClick) 
+  }
+
+  onClick(event) {
+    // Traverse the DOM to find the parent node with attribute of data-path.
+    let nodeWithPath = event.path.find(node => node.dataset && node.dataset.hasOwnProperty('path'))
+    if (nodeWithPath) {
+      this.files = [...this.files.map(file => file.path === nodeWithPath.dataset.path ? {...file, selected: file.selected ? false : true} : file)]
+      this.dispatchEvent(new Event('change', {bubbles:true}))
+    }
+  }
+
   render(){
     return html`
-      <div>
-       Toolbar
-      </div>
+      <style>
+        .file[selected] {
+          background: var(--selected-background, #CCC) !important
+        }
+        /*
+        .file[selected]:not([focus]) {
+          background: var(--selected-background, #CCC)
+        }
+        */
+        .file[focused]:not([selected])::before {
+          background: var(--focus-not-selected-background, transparent) !important
+        }
+        .file div[secondary] {
+          color: #AAA
+        }
+      </style>
       ${this.files.map(file => html`
-        <paper-icon-item>
-           
+        <paper-icon-item class='file' data-path="${file.path}" ?selected="${file.selected}">
           ${file.type === 'image' ? html`<iron-icon icon="image:photo" slot="item-icon"></iron-icon>` : ``}
           ${file.type === 'audio' ? html`<iron-icon icon="image:audiotrack" slot="item-icon"></iron-icon>` : ``}
           <paper-item-body two-line>
             <div>${file.path}</div>
-            <div secondary>${file.type}</div>
+            <div secondary>${file.size}</div>
           </paper-item-body>
         </paper-icon-item>
       `)}
+    `
+  }
 
-    `;
-  }
-  static get properties() {
-    return {
-      files: {
-        type: Array,
-        value: [],
-      },
-    };
-  }
 }
 
-window.customElements.define('file-list', FileList);
+window.customElements.define('file-list', FileList)
