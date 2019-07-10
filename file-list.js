@@ -30,17 +30,18 @@ class FileList extends LitElement {
 
   connectedCallback() {
     super.connectedCallback()
-    this.addEventListener('click', this.onClick) 
+    this.addEventListener('click', this.onClick.bind(this)) 
   }
 
   disconnectedCallback() {
     super.disconnectedCallback()
-    this.removeEventListener('click', this.onClick) 
+    this.removeEventListener('click', this.onClick.bind(this)) 
   }
 
   onClick(event) {
     // Traverse the DOM to find the parent node with attribute of data-path.
-    let nodeWithPath = event.path.find(node => node.hasAttribute('data-path'))
+    const path = event.composedPath()
+    let nodeWithPath = path.find(node => node.hasAttribute && node.hasAttribute('data-path'))
     if (nodeWithPath) {
       this.files = [...this.files.map(file => file.path === nodeWithPath.getAttribute('data-path') ? {...file, selected: file.selected ? false : true} : file)]
       this.dispatchEvent(new Event('change', {bubbles:true}))
