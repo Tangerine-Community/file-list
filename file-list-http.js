@@ -28,8 +28,7 @@ class FileListHttp extends LitElement {
     this.files = []
   }
 
-  connectedCallback() {
-    super.connectedCallback()
+  firstUpdated() {
     this.shadowRoot.addEventListener('change', this.onChange.bind(this))
     if (this.hasAttribute('endpoint') && this.getAttribute('endpoint') !== '') {
       this.fetchFiles()
