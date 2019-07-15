@@ -20,7 +20,8 @@ class FileListHttp extends LitElement {
         type: Array
       },
       value: {
-        type: String
+        type: String,
+        reflect: true
       }
     }
   }
@@ -29,7 +30,8 @@ class FileListHttp extends LitElement {
     super()
     this.endpoint = ''
     this.files = []
-    this.value = ''
+    // WARNING: Do not set value in constructor if attribute is reflected. Thiw will result in empty attributes when otherwise set on load.
+    //this.value = ''
   }
 
   firstUpdated() {
@@ -48,7 +50,16 @@ class FileListHttp extends LitElement {
   async fetchFiles() {
     const that = this
     let reqListener = function () {
-      that.files = JSON.parse(this.responseText)
+      if (that.hasAttribute('value') && that.getAttribute('value')) {
+        that.files = JSON.parse(this.responseText).map(file => {
+          return {
+            ...file, 
+            selected: (file.selected || that.getAttribute('value').split(',').includes(file.path))
+          }
+        })
+      } else {
+        that.files = JSON.parse(this.responseText)
+      }
       that.shadowRoot.querySelector('file-list').files = that.files
       that.dispatchEvent(new Event('change'), {bubbles:true})
     }

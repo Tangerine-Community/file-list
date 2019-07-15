@@ -28,6 +28,12 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="HasValueFixture">
+      <template>
+        <file-list-http value="file1.png" endpoint="./files.json"></file-list-http>
+      </template>
+    </test-fixture>
+
     <script type="module">
 
       function animate() {
@@ -90,6 +96,7 @@
                 assert.equal(element.shadowRoot.querySelector('file-list').shadowRoot.querySelector('.file').hasAttribute('selected'), true)
                 assert.equal(element.files[0].selected, true)
                 assert.equal(element.value, 'file1.png')
+                assert.equal(element.getAttribute('value'), 'file1.png')
                 resolve()
               } else {
                 hasTriggeredFirstChangeEvent = true
@@ -100,6 +107,15 @@
               }
               await animate()
             })
+          })
+        })
+
+        test('should resume with value', () => {
+          return new Promise(async (resolve, reject) => {
+            const element = fixture('HasValueFixture')
+            await animate()
+            assert.equal(element.shadowRoot.querySelector('file-list').shadowRoot.querySelector('.file').hasAttribute('selected'), true)
+            resolve()
           })
         })
 
