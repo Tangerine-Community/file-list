@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.1.1
+- `<file-list-http>` should resume with value.
+
 ## v1.1.0
 - `<file-list-http>` is now a compliant form input with a value property which includes a comma delimited string of selected paths.
 
