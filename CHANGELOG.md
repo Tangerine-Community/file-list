@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.3.0
+- Show value when selecting files.
+
 ## v1.2.1
 - Fix modal issues by using `<paper-dialog>` instead.
 
