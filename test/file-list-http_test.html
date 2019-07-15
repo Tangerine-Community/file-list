@@ -63,7 +63,7 @@
         test('setting endpoint attribute works', () => {
           return new Promise(async (resolve, reject) => {
             const element = fixture('BasicTestFixture')
-            element.addEventListener('change', async() => {
+            element.addEventListener('load', async() => {
               await animate()
               assert.equal(element.shadowRoot.querySelector('file-list').shadowRoot.querySelectorAll('.file').length, 2)
               resolve()
@@ -76,7 +76,7 @@
         test('loading with endpoint attribute works', () => {
           return new Promise(async (resolve, reject) => {
             const element = fixture('HasEndpointFixture')
-            element.addEventListener('change', async() => {
+            element.addEventListener('load', async() => {
               await animate()
               assert.equal(element.shadowRoot.querySelector('file-list').shadowRoot.querySelectorAll('.file').length, 2)
               resolve()
@@ -87,26 +87,20 @@
         test('should fire change event on file select and have value', () => {
           return new Promise(async (resolve, reject) => {
             const element = fixture('HasEndpointFixture')
-            let hasTriggeredFirstChangeEvent = false
-            let hasTriggeredSecondChangeEvent = false
-            element.addEventListener('change', async() => {
-              if (hasTriggeredFirstChangeEvent) {
-                hasTriggeredSecondChangeEvent = true
-                await animate()
-                assert.equal(element.shadowRoot.querySelector('file-list').shadowRoot.querySelector('.file').hasAttribute('selected'), true)
-                assert.equal(element.files[0].selected, true)
-                assert.equal(element.value, 'file1.png')
-                assert.equal(element.getAttribute('value'), 'file1.png')
-                resolve()
-              } else {
-                hasTriggeredFirstChangeEvent = true
-                await animate()
-                element.shadowRoot.querySelector('file-list').shadowRoot.querySelector('.file').click()
-                element.shadowRoot.querySelector('file-list').shadowRoot.querySelector('.file').dispatchEvent(new Event('click'))
-                await animate()
-              }
+            element.addEventListener('load', async() => {
               await animate()
+              element.shadowRoot.querySelector('file-list').shadowRoot.querySelector('.file').click()
+              await animate()
+            }, {once: true})
+            element.addEventListener('change', async() => {
+              await animate()
+              assert.equal(element.shadowRoot.querySelector('file-list').shadowRoot.querySelector('.file').hasAttribute('selected'), true)
+              assert.equal(element.files[0].selected, true)
+              assert.equal(element.value, 'file1.png')
+              assert.equal(element.getAttribute('value'), 'file1.png')
+              resolve()
             })
+            await animate()
           })
         })
 

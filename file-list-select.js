@@ -42,6 +42,10 @@ class FileListSelect extends LitElement {
   }
 
   firstUpdated() {
+    // WARNING: LitElement is not reflecting initial attribute of value to the value property. 
+    if (this.getAttribute('value') !== this.value) {
+      this.value = this.getAttribute('value')
+    }
     this.shadowRoot.querySelector('file-list-http').addEventListener('change', this.onChange.bind(this))
     if (this.hasAttribute('endpoint') && this.getAttribute('endpoint') !== '') {
       this.shadowRoot.querySelector('file-list-http').setAttribute('endpoint', this.getAttribute('endpoint'))
@@ -75,7 +79,7 @@ class FileListSelect extends LitElement {
         <paper-dialog-scrollable>
             <file-list-http></file-list-http>
             <div class="buttons">
-              <paper-button id="close-button" dialog-confirm autofocus>OK</paper-button>
+              <paper-button id="close-button" @click=${this.onCloseClick} dialog-confirm autofocus>OK</paper-button>
             </div>
         </paper-dialog-scrollable>
       </paper-dialog>
@@ -86,10 +90,13 @@ class FileListSelect extends LitElement {
     this.shadowRoot.querySelector('#dialog').open()
   }
 
+  onCloseClick() {
+    this.dispatchEvent(new Event('change', {bubbles:true}))
+  }
+
   onChange(event) {
     this.files = this.shadowRoot.querySelector('file-list-http').files
     this.value = this.files.reduce((value, file) => file.selected ? `${file.path},${value}` : value, '').slice(0, -1);
-    this.dispatchEvent(new Event('change'), {bubbles:true})
   }
 
 }

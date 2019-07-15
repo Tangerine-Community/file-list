@@ -61,7 +61,7 @@ class FileListHttp extends LitElement {
         that.files = JSON.parse(this.responseText)
       }
       that.shadowRoot.querySelector('file-list').files = that.files
-      that.dispatchEvent(new Event('change'), {bubbles:true})
+      that.dispatchEvent(new CustomEvent('load'))
     }
     let oReq = new XMLHttpRequest();
     oReq.addEventListener("load", reqListener);
@@ -78,7 +78,7 @@ class FileListHttp extends LitElement {
   onChange(event) {
     this.files = this.shadowRoot.querySelector('file-list').files
     this.value = this.files.reduce((value, file) => file.selected ? `${file.path},${value}` : value, '').slice(0, -1);
-    this.dispatchEvent(new Event('change'), {bubbles:true})
+    this.dispatchEvent(new Event('change', {bubbles:true}))
   }
 
 }
