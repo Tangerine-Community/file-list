@@ -78,7 +78,7 @@
           })
         })
 
-        test('should fire change event on file select', () => {
+        test('should fire change event on file select and have value', () => {
           return new Promise(async (resolve, reject) => {
             const element = fixture('HasEndpointFixture')
             let hasTriggeredFirstChangeEvent = false
@@ -89,11 +89,13 @@
                 await animate()
                 assert.equal(element.shadowRoot.querySelector('file-list').shadowRoot.querySelector('.file').hasAttribute('selected'), true)
                 assert.equal(element.files[0].selected, true)
+                assert.equal(element.value, 'file1.png')
                 resolve()
               } else {
                 hasTriggeredFirstChangeEvent = true
                 await animate()
                 element.shadowRoot.querySelector('file-list').shadowRoot.querySelector('.file').click()
+                element.shadowRoot.querySelector('file-list').shadowRoot.querySelector('.file').dispatchEvent(new Event('click'))
                 await animate()
               }
               await animate()
