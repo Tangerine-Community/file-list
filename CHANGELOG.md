@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.3.1
+- Fix event and initial property assignment bugs.
+
 ## v1.3.0
 - Show value when selecting files.
 
