@@ -60,8 +60,8 @@
           await animate()
         })
 
-        test('does open', async () => {
-          const element = fixture('BasicTestFixture')
+        test('does open and close', async () => {
+          const element = fixture('HasEndpointFixture')
           await animate()
           element.shadowRoot.querySelector('#open-button').click()
           await animate()
