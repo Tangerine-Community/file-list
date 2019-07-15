@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.2.0
+- New `<file-list-select>` element for using `<file-list-http>` as a button that opens in a modal when clicked.
+
 ## v1.1.1
 - `<file-list-http>` should resume with value.
 
