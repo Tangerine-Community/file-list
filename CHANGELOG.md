@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.3.2
+- Lazy load file list http in file list select for better performance.
+
 ## v1.3.1
 - Fix event and initial property assignment bugs.
 
