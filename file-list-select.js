@@ -70,6 +70,7 @@ class FileListSelect extends LitElement {
       <paper-button id="open-button" @click=${this.onOpenClick}>
         <iron-icon icon="view-list"></iron-icon> Select files
       </paper-button>
+      ${this.value}
       <paper-dialog id="dialog">
         <paper-dialog-scrollable>
             <file-list-http></file-list-http>
