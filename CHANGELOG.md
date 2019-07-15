@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.2.1
+- Fix modal issues by using `<paper-dialog>` instead.
+
 ## v1.2.0
 - New `<file-list-select>` element for using `<file-list-http>` as a button that opens in a modal when clicked.
 
