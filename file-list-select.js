@@ -46,19 +46,6 @@ class FileListSelect extends LitElement {
     if (this.getAttribute('value') !== this.value) {
       this.value = this.getAttribute('value')
     }
-    this.shadowRoot.querySelector('file-list-http').addEventListener('change', this.onChange.bind(this))
-    if (this.hasAttribute('endpoint') && this.getAttribute('endpoint') !== '') {
-      this.shadowRoot.querySelector('file-list-http').setAttribute('endpoint', this.getAttribute('endpoint'))
-    }
-    if (this.hasAttribute('value') && this.getAttribute('value') !== '') {
-      this.shadowRoot.querySelector('file-list-http').setAttribute('value', this.getAttribute('value'))
-    }
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'endpoint' && this.shadowRoot.querySelector('file-list-http')) {
-      this.shadowRoot.querySelector('file-list-http').setAttribute('endpoint', this.getAttribute('endpoint'))
-    }
   }
 
   render(){
@@ -77,7 +64,7 @@ class FileListSelect extends LitElement {
       ${this.value}
       <paper-dialog id="dialog">
         <paper-dialog-scrollable>
-            <file-list-http></file-list-http>
+            <div id="file-list-container"></div>
             <div class="buttons">
               <paper-button id="close-button" @click=${this.onCloseClick} dialog-confirm autofocus>OK</paper-button>
             </div>
@@ -87,14 +74,21 @@ class FileListSelect extends LitElement {
   }
 
   onOpenClick() {
+    this.shadowRoot.querySelector('#file-list-container').innerHTML = `
+      <file-list-http endpoint="${this.endpoint}" value="${this.value}"></file-list-http>
+    `
+    this.shadowRoot.querySelector('file-list-http').addEventListener('change', this.onChange.bind(this))
     this.shadowRoot.querySelector('#dialog').open()
   }
 
   onCloseClick() {
+    this.shadowRoot.querySelector('file-list-http').removeEventListener('change', this.onChange.bind(this))
+    this.shadowRoot.querySelector('#file-list-container').innerHTML = ``
     this.dispatchEvent(new Event('change', {bubbles:true}))
   }
 
   onChange(event) {
+    event.stopPropagation()
     this.files = this.shadowRoot.querySelector('file-list-http').files
     this.value = this.files.reduce((value, file) => file.selected ? `${file.path},${value}` : value, '').slice(0, -1);
   }
