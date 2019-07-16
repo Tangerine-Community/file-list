@@ -64,9 +64,9 @@ class FileList extends LitElement {
       </style>
       ${this.files.map(file => html`
         <paper-icon-item class='file' data-path="${file.path}" ?selected="${file.selected}">
-          ${file.type === 'image' ? html`<iron-icon icon="image:photo" slot="item-icon"></iron-icon>` : ``}
-          ${file.type === 'audio' ? html`<iron-icon icon="image:audiotrack" slot="item-icon"></iron-icon>` : ``}
-          ${!file.type ? html`<iron-icon icon="editor:insert-drive-file" slot="item-icon"></iron-icon>` : ``}
+          ${file.path.slice(-4) === '.png' ? html`<iron-icon icon="image:photo" slot="item-icon"></iron-icon>` : ``}
+          ${file.path.slice(-4) === '.mp3' ? html`<iron-icon icon="image:audiotrack" slot="item-icon"></iron-icon>` : ``}
+          ${file.path.slice(-4) !== '.png' && file.path.slice(-4) !== '.mp3' ? html`<iron-icon icon="editor:insert-drive-file" slot="item-icon"></iron-icon>` : ``}
           <paper-item-body two-line>
             <div>${file.path}</div>
             <div secondary>${file.size}</div>

@@ -1,112 +1,90 @@
 [
   {
     "path": "file1.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file2.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file3.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file4.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file5.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file6.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file7.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file8.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file9.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file10.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file11.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file12.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file13.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file14.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file15.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file16.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file17.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file18.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file19.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file20.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file21.png",
-    "type": "image",
     "size": "22KB"
   },
   {
     "path": "file22.png",
-    "type": "audio",
     "size": "3.1MB"
   }
 ]

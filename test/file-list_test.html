@@ -54,17 +54,19 @@
           element.files = [
             {
               path: 'file1.png',
-              type: 'image',
               size: '22KB'
             },
             {
-              path: 'file2.png',
-              type: 'audio',
+              path: 'file2.mp3',
               size: '3.1MB'
+            },
+            {
+              path: 'file3.foo',
+              size: '22KB'
             }
           ]
           await animate()
-          assert.equal(element.shadowRoot.querySelectorAll('.file').length, 2)
+          assert.equal(element.shadowRoot.querySelectorAll('.file').length, 3)
         })
 
         test('should select file', async () => {
@@ -80,13 +82,17 @@
           })
           await animate()
           element.files = [
-            {
+          {
               path: 'file1.png',
-              type: 'image',
+              size: '22KB'
             },
             {
-              path: 'file2.png',
-              type: 'audio',
+              path: 'file2.mp3',
+              size: '3.1MB'
+            },
+            {
+              path: 'file3.foo',
+              size: '22KB'
             }
           ]
           await animate()
