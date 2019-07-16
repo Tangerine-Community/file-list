@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.4.0
+- Remove requirement of a type property in file JSON in favor of automatic filetype detection.
+
 ## v1.3.3
 - Fix use of scrollable dialog and timing of lazy loading in order for correct positioning of dialog.
 
