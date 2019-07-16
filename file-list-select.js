@@ -4,6 +4,7 @@ import './file-list-http.js'
 import '@polymer/iron-icon/iron-icon.js'
 import '@polymer/paper-button/paper-button.js'
 import '@polymer/paper-dialog/paper-dialog.js'
+import '@polymer/paper-dialog-scrollable/paper-dialog-scrollable.js'
 /**
  * `file-list-select`
  * 
@@ -37,6 +38,7 @@ class FileListSelect extends LitElement {
     this.open = false
     this.endpoint = ''
     this.files = []
+    this.showLoadingMessage = false
     // WARNING: Do not set value in constructor if attribute is reflected. Thiw will result in empty attributes when otherwise set on load.
     //this.value = ''
   }
@@ -58,37 +60,42 @@ class FileListSelect extends LitElement {
           background-color: var(--open-button-background-color, #CCC);
         }
       </style>
+      ${this.showLoadingMessage === true ? `Loading...` : ``}
       <paper-button id="open-button" @click=${this.onOpenClick}>
         <iron-icon icon="view-list"></iron-icon> Select files
       </paper-button>
       ${this.value}
       <paper-dialog id="dialog">
         <paper-dialog-scrollable>
-            <div id="file-list-container"></div>
-            <div class="buttons">
-              <paper-button id="close-button" @click=${this.onCloseClick} dialog-confirm autofocus>OK</paper-button>
-            </div>
+          <div id="file-list-container"></div>
         </paper-dialog-scrollable>
+        <div class="buttons">
+          <paper-button id="close-button" @click=${this.onCloseClick} dialog-confirm autofocus>OK</paper-button>
+        </div>
       </paper-dialog>
     `
   }
 
   onOpenClick() {
+    this.showLoadingMessage = true
     this.shadowRoot.querySelector('#file-list-container').innerHTML = `
       <file-list-http endpoint="${this.endpoint}" value="${this.value}"></file-list-http>
     `
+    this.shadowRoot.querySelector('file-list-http').addEventListener('load', () => {
+      this.shadowRoot.querySelector('#dialog').open()
+      this.showLoadingMessage = false
+      this.dispatchEvent(new CustomEvent('load'))
+    }, {once: true})
     this.shadowRoot.querySelector('file-list-http').addEventListener('change', this.onChange.bind(this))
-    this.shadowRoot.querySelector('#dialog').open()
   }
 
   onCloseClick() {
-    this.shadowRoot.querySelector('file-list-http').removeEventListener('change', this.onChange.bind(this))
     this.shadowRoot.querySelector('#file-list-container').innerHTML = ``
     this.dispatchEvent(new Event('change', {bubbles:true}))
   }
 
   onChange(event) {
-    event.stopPropagation()
+    event.stopImmediatePropagation()
     this.files = this.shadowRoot.querySelector('file-list-http').files
     this.value = this.files.reduce((value, file) => file.selected ? `${file.path},${value}` : value, '').slice(0, -1);
   }

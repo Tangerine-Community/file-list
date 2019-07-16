@@ -65,7 +65,7 @@
             const element = fixture('BasicTestFixture')
             element.addEventListener('load', async() => {
               await animate()
-              assert.equal(element.shadowRoot.querySelector('file-list').shadowRoot.querySelectorAll('.file').length, 2)
+              assert.equal(element.shadowRoot.querySelector('file-list').shadowRoot.querySelectorAll('.file').length, 22)
               resolve()
             })
             await animate()
@@ -78,7 +78,7 @@
             const element = fixture('HasEndpointFixture')
             element.addEventListener('load', async() => {
               await animate()
-              assert.equal(element.shadowRoot.querySelector('file-list').shadowRoot.querySelectorAll('.file').length, 2)
+              assert.equal(element.shadowRoot.querySelector('file-list').shadowRoot.querySelectorAll('.file').length, 22)
               resolve()
             })
           })
