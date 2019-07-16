@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.3.3
+- Fix use of scrollable dialog and timing of lazy loading in order for correct positioning of dialog.
+
 ## v1.3.2
 - Lazy load file list http in file list select for better performance.
 
