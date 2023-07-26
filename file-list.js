@@ -50,6 +50,7 @@ class FileList extends LitElement {
   }
 
   render(){
+    if (this.files.length > 0) {
     return html`
       <style>
         .file[selected] {
@@ -62,6 +63,7 @@ class FileList extends LitElement {
           color: #AAA
         }
       </style>
+      
       ${this.files.map(file => html`
         <paper-icon-item class='file' data-path="${file.path}" ?selected="${file.selected}">
           ${file.path.slice(-4) === '.png' ? html`<iron-icon icon="image:photo" slot="item-icon"></iron-icon>` : ``}
@@ -74,6 +76,9 @@ class FileList extends LitElement {
         </paper-icon-item>
       `)}
     `
+    } else {
+      return html`<div>No files found.</div>`
+    }
   }
 
 }
